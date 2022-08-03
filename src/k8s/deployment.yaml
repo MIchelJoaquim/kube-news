@@ -36,3 +36,44 @@ spec:
   - port: 5432
     targetPort:  5432
         
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubenews
+spec:
+  selector:
+    matchLabels:
+      app: kubenews
+  template:
+    metadata:
+      labels:
+        app: kubenews
+    spec:
+      containers:
+      - name: kubenews
+        image: micheljoaquim/kube-news:v1
+        env: 
+        - name: DB_DATABASE
+          value: "kubenews"
+        - name: DB_USERNAME
+          value: "user"
+        - name: DB_PASSWORD
+          value: "password"
+        - name: DB_HOST
+          value: "postgre"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name:  svc-kubenews
+spec:
+  selector:
+    app: kubenews
+  type: NodePort
+  ports:
+  - port:  80
+    targetPort:  8080
+    nodePort: 30000
