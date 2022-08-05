@@ -45,11 +45,4 @@ jobs:
     steps: 
       - uses: actions/checkout@v3
       
-      - name: Kubernetes
-        uses: Azure:k8s-set-context@v2
-        with:
-          method: kubeconfig
-          kubeconfig: ${{secrets.K8S_CONFIG}}
 
-
-  
